@@ -30,6 +30,7 @@ import DisplayNameSection from './components/PersonalInfo/DisplayNameSection.vue
 import EmailSection from './components/PersonalInfo/EmailSection/EmailSection.vue'
 import TwitterSection from './components/PersonalInfo/TwitterSection.vue'
 import LanguageSection from './components/PersonalInfo/LanguageSection/LanguageSection.vue'
+import LocaleSection from './components/PersonalInfo/LocaleSection/LocaleSection.vue'
 import ProfileSection from './components/PersonalInfo/ProfileSection/ProfileSection.vue'
 import OrganisationSection from './components/PersonalInfo/OrganisationSection.vue'
 import RoleSection from './components/PersonalInfo/RoleSection.vue'
@@ -51,11 +52,13 @@ const DisplayNameView = Vue.extend(DisplayNameSection)
 const EmailView = Vue.extend(EmailSection)
 const TwitterView = Vue.extend(TwitterSection)
 const LanguageView = Vue.extend(LanguageSection)
+const LocaleView = Vue.extend(LocaleSection)
 
 new DisplayNameView().$mount('#vue-displayname-section')
 new EmailView().$mount('#vue-email-section')
 new TwitterView().$mount('#vue-twitter-section')
 new LanguageView().$mount('#vue-language-section')
+new LocaleView().$mount('#vue-locale-section')
 
 if (profileEnabledGlobally) {
 	const ProfileView = Vue.extend(ProfileSection)

@@ -213,58 +213,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 	federationSettingsView.render();
 
-	var updateLanguage = function () {
-		if (OC.PasswordConfirmation.requiresPasswordConfirmation()) {
-			OC.PasswordConfirmation.requirePasswordConfirmation(updateLanguage);
-			return;
-		}
-
-		var selectedLang = $("#languageinput").val(),
-			user = OC.getCurrentUser();
-
-		$.ajax({
-			url: OC.linkToOCS('cloud/users', 2) + user['uid'],
-			method: 'PUT',
-			data: {
-				key: 'language',
-				value: selectedLang
-			},
-			success: function() {
-				location.reload();
-			},
-			fail: function() {
-				OC.Notification.showTemporary(t('settings', 'An error occurred while changing your language. Please reload the page and try again.'));
-			}
-		});
-	};
-	$("#languageinput").change(updateLanguage);
-
-	var updateLocale = function () {
-		if (OC.PasswordConfirmation.requiresPasswordConfirmation()) {
-			OC.PasswordConfirmation.requirePasswordConfirmation(updateLocale);
-			return;
-		}
-
-		var selectedLocale = $("#localeinput").val(),
-			user = OC.getCurrentUser();
-
-		$.ajax({
-			url: OC.linkToOCS('cloud/users', 2) + user.uid,
-			method: 'PUT',
-			data: {
-				key: 'locale',
-				value: selectedLocale
-			},
-			success: function() {
-				moment.locale(selectedLocale);
-			},
-			fail: function() {
-				OC.Notification.showTemporary(t('settings', 'An error occurred while changing your locale. Please reload the page and try again.'));
-			}
-		});
-	};
-	$("#localeinput").change(updateLocale);
-
 	var uploadparms = {
 		pasteZone: null,
 		done: function (e, data) {
@@ -384,11 +332,5 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 	}, user.displayName);
 });
-
-window.setInterval(function() {
-	$('#localeexample-time').text(moment().format('LTS'))
-	$('#localeexample-date').text(moment().format('L'))
-	$('#localeexample-fdow').text(t('settings', 'Week starts on {fdow}', { fdow: dayNames[firstDay] }))
-}, 1000)
 
 OC.Settings.updateAvatar = updateAvatar;

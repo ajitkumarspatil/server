@@ -117,12 +117,6 @@ input {
 	display: inline-grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: 1fr 1fr 1fr 2fr;
-
-	#locale {
-		h3 {
-			height: 32px;
-		}
-	}
 }
 
 .personal-show-container {
@@ -146,9 +140,7 @@ input {
 }
 
 select {
-	&#timezone,
-	&#languageinput,
-	&#localeinput {
+	&#timezone {
 		width: 100%;
 	}
 }
