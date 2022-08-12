@@ -139,10 +139,6 @@ class PersonalInfo implements ISettings {
 		$messageParameters = $this->getMessageParameters($account);
 
 		$parameters = [
-			'total_space' => $totalSpace,
-			'usage' => \OC_Helper::humanFileSize($storageInfo['used']),
-			'usage_relative' => round($storageInfo['relative']),
-			'quota' => $storageInfo['quota'],
 			'avatarChangeSupported' => $user->canChangeAvatar(),
 			'federationEnabled' => $federationEnabled,
 			'lookupServerUploadEnabled' => $lookupServerUploadEnabled,
@@ -154,13 +150,17 @@ class PersonalInfo implements ISettings {
 			'website' => $account->getProperty(IAccountManager::PROPERTY_WEBSITE)->getValue(),
 			'websiteScope' => $account->getProperty(IAccountManager::PROPERTY_WEBSITE)->getScope(),
 			'websiteVerification' => $account->getProperty(IAccountManager::PROPERTY_WEBSITE)->getVerified(),
-			'groups' => $this->getGroups($user),
 			'isFairUseOfFreePushService' => $this->isFairUseOfFreePushService(),
 			'profileEnabledGlobally' => $this->profileManager->isProfileEnabled(),
 		] + $messageParameters + $localeParameters;
 
 		$personalInfoParameters = [
 			'userId' => $uid,
+			'groups' => $this->getGroups($user),
+			'quota' => $storageInfo['quota'],
+			'totalSpace' => $totalSpace,
+			'usage' => \OC_Helper::humanFileSize($storageInfo['used']),
+			'usageRelative' => round($storageInfo['relative']),
 			'displayName' => $this->getProperty($account, IAccountManager::PROPERTY_DISPLAYNAME),
 			'twitter' => $this->getProperty($account, IAccountManager::PROPERTY_TWITTER),
 			'emailMap' => $this->getEmailMap($account),
