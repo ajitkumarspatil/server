@@ -159,11 +159,10 @@ class CalendarHome extends \Sabre\CalDAV\CalendarHome {
 			return new TrashbinHome($this->caldavBackend, $this->principalInfo);
 		}
 
-		// Calendars
-		foreach ($this->caldavBackend->getCalendarsForUser($this->principalInfo['uri']) as $calendar) {
-			if ($calendar['uri'] === $name) {
-				return new Calendar($this->caldavBackend, $calendar, $this->l10n, $this->config, $this->logger);
-			}
+		// Calendar
+		$calendar = $this->caldavBackend->getCalendarByUri($this->principalInfo['uri'], $name);
+		if(!empty($calendar)) {
+			return new Calendar($this->caldavBackend, $calendar, $this->l10n, $this->config, $this->logger);
 		}
 
 		if ($this->caldavBackend instanceof SubscriptionSupport) {
