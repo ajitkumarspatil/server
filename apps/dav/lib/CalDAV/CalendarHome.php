@@ -159,10 +159,17 @@ class CalendarHome extends \Sabre\CalDAV\CalendarHome {
 			return new TrashbinHome($this->caldavBackend, $this->principalInfo);
 		}
 
-		// Calendar
+		// Calendar - this covers all "regular" calendars, but not shared
 		$calendar = $this->caldavBackend->getCalendarByUri($this->principalInfo['uri'], $name);
 		if(!empty($calendar)) {
 			return new Calendar($this->caldavBackend, $calendar, $this->l10n, $this->config, $this->logger);
+		}
+
+		// Fallback to cover shared calendars
+		foreach ($this->caldavBackend->getCalendarsForUser($this->principalInfo['uri']) as $calendar) {
+			if ($calendar['uri'] === $name) {
+				return new Calendar($this->caldavBackend, $calendar, $this->l10n, $this->config, $this->logger);
+			}
 		}
 
 		if ($this->caldavBackend instanceof SubscriptionSupport) {
