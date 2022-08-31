@@ -67,5 +67,4 @@ interface IInitialStateService {
 	 * @see \OCP\AppFramework\Services\IInitialState::provideLazyInitialState()
 	 */
 	public function provideLazyInitialState(string $appName, string $key, Closure $closure): void;
-	public function provideShippedBackgrounds(string $appName, string $key, Closure $closure): void;
 }

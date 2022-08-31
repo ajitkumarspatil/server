@@ -58,9 +58,6 @@ class BeforeTemplateRenderedListener implements IEventListener {
 		$this->initialStateService->provideLazyInitialState(Application::APP_ID, 'data', function () use ($serverContainer) {
 			return $serverContainer->query(JSDataService::class);
 		});
-		$this->initialStateService->provideShippedBackgrounds(Application::APP_ID, 'data', function () use ($serverContainer) {
-			return $serverContainer->query(JSDataService::class);
-		});
 
 			$this->themeInjectionService->injectHeaders();
 
