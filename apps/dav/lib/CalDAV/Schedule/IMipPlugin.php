@@ -220,7 +220,7 @@ class IMipPlugin extends SabreIMipPlugin {
 		];
 
 		$fromEMail = Util::getDefaultEmailAddress('invitations-noreply');
-		$fromName = $l10n->t('%1$s via %2$s', [$senderName, $this->defaults->getName()]);
+		$fromName = $l10n->t('%1$s via %2$s', [$senderName ?? $sender, $this->defaults->getName()]);
 
 		$message = $this->mailer->createMessage()
 			->setFrom([$fromEMail => $fromName])
