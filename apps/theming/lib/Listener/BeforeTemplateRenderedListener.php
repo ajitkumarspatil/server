@@ -25,7 +25,6 @@ declare(strict_types=1);
  */
 namespace OCA\Theming\Listener;
 
-use OCA\Dashboard\Service\BackgroundService;
 use OCA\Theming\AppInfo\Application;
 use OCA\Theming\Service\JSDataService;
 use OCA\Theming\Service\ThemeInjectionService;
@@ -59,7 +58,7 @@ class BeforeTemplateRenderedListener implements IEventListener {
 			return $serverContainer->query(JSDataService::class);
 		});
 
-			$this->themeInjectionService->injectHeaders();
+		$this->themeInjectionService->injectHeaders();
 
 		// Making sure to inject just after core
 		\OCP\Util::addScript('theming', 'theming', 'core');
