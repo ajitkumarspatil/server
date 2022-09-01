@@ -188,24 +188,27 @@ class Storage {
 			return false;
 		}
 
-		[$uid, $filename] = self::getUidAndFilename($filename);
+		// since hook paths are always relative to the "default filesystem view"
+		// we always use the owner from there to get the full node
+		$uid = Filesystem::getView()->getOwner('');
 
-		$files_view = new View('/'.$uid .'/files');
+		/** @var Folder $userFolder */
+		$userFolder = \OC::$server->get(IRootFolder::class)->getUserFolder($uid);
 
 		$eventDispatcher = \OC::$server->get(IEventDispatcher::class);
-		$fileInfo = $files_view->getFileInfo($filename);
-		$id = $fileInfo->getId();
-		$nodes = \OC::$server->get(IRootFolder::class)->getUserFolder($uid)->getById($id);
-		foreach ($nodes as $node) {
-			$event = new CreateVersionEvent($node);
-			$eventDispatcher->dispatch('OCA\Files_Versions::createVersion', $event);
-			if ($event->shouldCreateVersion() === false) {
-				return false;
-			}
+		$file = $userFolder->get($filename);
+		if (!$file) {
+			return false;
 		}
 
 		// no use making versions for empty files
-		if ($fileInfo->getSize() === 0) {
+		if ($file->getSize() === 0) {
+			return false;
+		}
+
+		$event = new CreateVersionEvent($file);
+		$eventDispatcher->dispatch('OCA\Files_Versions::createVersion', $event);
+		if ($event->shouldCreateVersion() === false) {
 			return false;
 		}
 
@@ -214,7 +217,7 @@ class Storage {
 		$userManager = \OC::$server->get(IUserManager::class);
 		$user = $userManager->get($uid);
 
-		$versionManager->createVersion($user, $fileInfo);
+		$versionManager->createVersion($user, $file);
 	}
 
 
