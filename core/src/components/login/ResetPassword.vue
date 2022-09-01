@@ -32,9 +32,8 @@
 				@change="updateUsername" />
 				<!--<?php p($_['user_autofocus'] ? 'autofocus' : ''); ?>
 				autocomplete="<?php p($_['login_form_autocomplete']); ?>" autocapitalize="none" autocorrect="off"-->
-			<div id="reset-password-wrapper">
-				<LoginButton :value="t('core', 'Reset password')" />
-			</div>
+			<LoginButton :value="t('core', 'Reset password')" />
+
 			<NcNoteCard v-if="message === 'send-success'"
 				type="success">
 				{{ t('core', 'A password reset message has been sent to the email address of this account. If you do not receive it, check your spam/junk folders or ask your local administrator for help.') }}
@@ -50,7 +49,7 @@
 				{{ t('core', 'Password cannot be changed. Please contact your administrator.') }}
 			</NcNoteCard>
 
-			<a href="#"
+			<a class="login-form__link" href="#"
 				@click.prevent="$emit('abort')">
 				{{ t('core', 'Back to login') }}
 			</a>
@@ -130,7 +129,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .login-form {
 	text-align: left;
 	font-size: 1rem;
@@ -140,6 +139,15 @@ export default {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+	}
+
+	&__link {
+		display: block;
+		font-weight: normal !important;
+		padding-bottom: 1rem;
+		cursor: pointer;
+		font-size: var(--default-font-size);
+		text-align: center;
 	}
 }
 </style>

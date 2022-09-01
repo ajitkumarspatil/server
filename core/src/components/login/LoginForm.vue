@@ -27,23 +27,22 @@
 		:action="loginActionUrl"
 		@submit="submit">
 		<fieldset class="login-form__fieldset">
-			<div v-if="apacheAuthFailed"
-				class="warning">
-				{{ t('core', 'Server side authentication failed!') }}<br>
-				<small>{{ t('core', 'Please contact your administrator.') }}
-				</small>
-			</div>
-			<div v-for="(message, index) in messages"
-				:key="index"
-				class="warning">
-				{{ message }}<br>
-			</div>
-			<div v-if="internalException"
-				class="warning">
-				{{ t('core', 'An internal error occurred.') }}<br>
-				<small>{{ t('core', 'Please try again or contact your administrator.') }}
-				</small>
-			</div>
+			<NcNoteCard v-if="apacheAuthFailed"
+				:title="t('core', 'Server side authentication failed!')"
+				type="warning">
+				{{ t('core', 'Please contact your administrator.') }}
+			</NcNoteCard>
+			<NcNoteCard v-if="messages.length > 0"
+				<div v-for="(message, index) in messages"
+					:key="index">
+					{{ message }}<br>
+				</div>
+			</NcNoteCard>
+			<NcNoteCard v-if="internalException"
+				:class="t('core', 'An internal error occurred.')"
+				type="warning">
+				{{ t('core', 'Please try again or contact your administrator.') }}
+			</NcNoteCard>
 			<div id="message"
 				class="hidden">
 				<img class="float-spinner"
@@ -58,8 +57,8 @@
 				:labelVisible="true"
 				ref="user"
 				name="user"
+				:value="user"
 				:class="{shake: invalidPassword}"
-				:value.sync="user"
 				autocapitalize="none"
 				:spellchecking="false"
 				:autocomplete="autoCompleteAllowed ? 'username' : 'off'"
@@ -72,7 +71,7 @@
 				name="password"
 				:labelVisible="true"
 				:class="{shake: invalidPassword}"
-				:value.sync="password"
+				:value="password"
 				:spellchecking="false"
 				autocapitalize="none"
 				:autocomplete="autoCompleteAllowed ? 'current-password' : 'off'"
@@ -111,6 +110,7 @@ import { generateUrl, imagePath } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import NcPasswordField from '@nextcloud/vue/dist/Components/NcPasswordField.js'
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js'
+import NcNoteCard from '@nextcloud/vue/dist/Components/NcNoteCard.js'
 import Eye from 'vue-material-design-icons/Eye'
 import EyeOff from 'vue-material-design-icons/EyeOff'
 
@@ -126,6 +126,7 @@ export default {
 		LoginButton,
 		NcPasswordField,
 		NcTextField,
+		NcNoteCard,
 	},
 
 	props: {
